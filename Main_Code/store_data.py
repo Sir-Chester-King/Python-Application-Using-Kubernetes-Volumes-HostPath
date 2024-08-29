@@ -30,14 +30,17 @@ def store_data(new_user_instance):
         # Store the object in a file using pickle.
         # Open the file in binary write mode.
         with open(file_path, "ab") as file_users:
+
             # Serialize (pickle) the object and save it to the file.
             pickle.dump(new_user_instance, file_users)
 
         print("Data stored !!!")
+
     except FileNotFoundError:
         # Store the object in a file using pickle.
         # Open the file in binary write mode.
         with open(file_path, "wb") as file_users:
+
             # Serialize (pickle) the object and save it to the file.
             pickle.dump(new_user_instance, file_users)
 
