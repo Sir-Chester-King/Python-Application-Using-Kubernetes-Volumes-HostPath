@@ -1,8 +1,11 @@
+import pickle
 import re
 
-from view_data import *
+from storage_directory import *
+from view_data import load_all_user
 
 
+# Modify a user's attribute object.
 def modify_user():
     # If it wants to modify multiple users.
     loop_modify = True
@@ -23,18 +26,10 @@ def modify_user():
     # Load all users objects from the file to this "CLASS LIST"
     loaded_users = load_all_user()
 
-    print("TYPESSSS: ", type(loaded_users))
+    # Variable to check if there was any attribute change.
+    change = False
 
-    for users in loaded_users:
-        print("Name:", users.get_name())
-        print("Surname:", users.get_surname())
-        print("Address:", users.get_address())
-        print("Phone Number:", users.get_phone_number())
-        print("-" * 40)
-
-    change = None
-
-    # Find the object with the specific name and modify its attribute
+    # Find the object with the specific "NAME"" and modify its attribute
     for user in loaded_users:
         if str(user.get_name()) == name_user:
             user.set_name(input("Name: "))
@@ -50,52 +45,31 @@ def modify_user():
                     break
             change = True
 
-        if not change:
-            print("User not found.")
-            return 0
+    # No User found in the file.
+    # Application terminate.
+    if not change:
+        print("User not found.")
+        return 0
 
     # Writing the data in the file.
-    try:
-        # Store the object in a file using pickle.
-        # Open the file in binary write mode.
-        with open(file_path, "wb") as file_users:
+    # Write one object of the list per time.
+    for override_data in loaded_users:
+        try:
+            # Store the object in a file using pickle.
+            # Open the file in binary write mode.
+            with open(file_path, "ab") as file_users:
 
-            # Serialize (pickle) the object and save it to the file.
-            pickle.dump(loaded_users, file_users)
+                # Serialize (pickle) the object and save it to the file.
+                pickle.dump(override_data, file_users)
 
-        print("Data stored !!!")
-
-        print("TYPE:", type(loaded_users))
-
-    except FileNotFoundError:
-        print("File not found")
-    except PermissionError:
-        print("You do not have permission to access this file.")
-    except IOError:
-        print("An I/O error occurred while writing the file.")
-    except pickle.UnpicklingError as e:
-        print(f"An unexpected error occurred: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-
-    """# Writing the data in the file.
-    try:
-        # Store the object in a file using pickle.
-        # Open the file in binary write mode.
-        with open(file_path, "wb") as file_users:
-
-            # Serialize (pickle) the object and save it to the file.
-            pickle.dump(loaded_users, file_users)
-
-        print("Data stored !!!")
-
-    except FileNotFoundError:
-        print("File not found.")
-    except PermissionError:
-        print("You do not have permission to access this file.")
-    except IOError:
-        print("An I/O error occurred while writing the file.")
-    except pickle.UnpicklingError as e:
-        print(f"An unexpected error occurred: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")"""
+        except FileNotFoundError:
+            print("File not found")
+        except PermissionError:
+            print("You do not have permission to access this file.")
+        except IOError:
+            print("An I/O error occurred while writing the file.")
+        except pickle.UnpicklingError as e:
+            print(f"An unexpected error occurred: {e}")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+    print("Data stored !!!")

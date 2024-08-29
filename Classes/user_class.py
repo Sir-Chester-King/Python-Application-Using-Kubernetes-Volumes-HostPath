@@ -1,5 +1,5 @@
 # Class for the User objects instances.
-# The purpose of ths class is to set and get user's personal info.
+# The purpose of the class is to set and get user's personal info.
 class User(object):
 
     # Declare the constructor function.

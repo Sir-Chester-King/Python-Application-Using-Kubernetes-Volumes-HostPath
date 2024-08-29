@@ -14,6 +14,7 @@ from storage_directory import *
 """
 
 
+# Function to store the user object instance in the Pickle binary file.
 def store_data(new_user_instance):
     # Check or create the "Storage" directory.
     directory_storage = storage_directory()
@@ -28,23 +29,20 @@ def store_data(new_user_instance):
     # Writing the data in the file.
     try:
         # Store the object in a file using pickle.
-        # Open the file in binary write mode.
+        # Open the file in binary APPEND mode.
         with open(file_path, "ab") as file_users:
 
             # Serialize (pickle) the object and save it to the file.
             pickle.dump(new_user_instance, file_users)
 
-        print("Data stored !!!")
-
-    except FileNotFoundError:
+    except FileNotFoundError:  # Create a new pickle binary file.
         # Store the object in a file using pickle.
-        # Open the file in binary write mode.
+        # Open the file in binary WRITE mode.
         with open(file_path, "wb") as file_users:
 
             # Serialize (pickle) the object and save it to the file.
             pickle.dump(new_user_instance, file_users)
 
-        print("Data stored !!!")
     except PermissionError:
         print("You do not have permission to access this file.")
     except IOError:

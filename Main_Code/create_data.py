@@ -25,7 +25,7 @@ def ask_data():
     return name, surname, address, phone_number
 
 
-# Check the validate input
+# Check and validate the input.
 def check_input(name, surname, address, phone_number):
     # False as default for not correct info inserted.
     check_value = False
@@ -41,16 +41,16 @@ def check_input(name, surname, address, phone_number):
     while True:
         correct = input("Yes or No (y / n): ").lower()
         if correct == "y":
-            check_value = True  # All info are correct.
+            check_value = True  # All info is correct.
             break  # Break the loop.
 
         elif correct == "n":
             break  # Break the loop, without changing the check_value variable (FALSE as default).
 
     if check_value:
-        return True  # Input ARE correct.
+        return True  # Input IS correct.
     else:
-        return False  # Input are NOT correct.
+        return False  # Input is NOT correct.
 
 
 # Function to create a new User.
@@ -60,8 +60,11 @@ def create_user():
     # False as default for not correct info inserted.
     correct_user_insert = False
 
+    # Loop if there wer no correct inserted user's info.
     while not correct_user_insert:
         clear()
+
+        # Call the function to ask in input the user's info.
         name, surname, address, phone_number = ask_data()
 
         while True:
@@ -71,13 +74,14 @@ def create_user():
             if check == "y":
                 check_value = check_input(name, surname, address, phone_number)
 
-                # Input IS correct.
+                # Input "IS" correct.
                 if check_value:
                     correct_user_insert = True
                     break  # Break the loop.
                 else:
                     break  # Break the loop, without changing the correct_user_insert variable (FALSE as default).
 
+            # The user chose to do not check and validate the input.
             elif check == "n":
                 correct_user_insert = True
                 break

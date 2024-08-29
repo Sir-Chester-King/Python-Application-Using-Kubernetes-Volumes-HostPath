@@ -14,6 +14,7 @@ from storage_directory import *
 """
 
 
+# Function to list as print all the User objects gathered from the Pickle binary file.
 def list_all_users():
     # Check or create the "Storage" directory.
     directory_storage = storage_directory()
@@ -65,6 +66,7 @@ def list_all_users():
     print("All objects have been loaded and their attributes printed.")
 
 
+# Function used to gather all the user objects and store them into a Class List type.
 def load_all_user():
     # Check or create the "Storage" directory.
     directory_storage = storage_directory()
@@ -76,6 +78,7 @@ def load_all_user():
     # Path of the txt file where the user's data will stored
     file_path = os.path.join(directory_storage, file_name_storage)
 
+    # Initializing an empty list.
     loaded_data_users = []
 
     try:
@@ -83,12 +86,8 @@ def load_all_user():
         with open(file_path, 'rb') as file_users:
             while True:
                 try:
-                    # Deserialize (unpickle) the object from the file
+                    # Deserialize (unpickle) the object from the file.
                     loaded_data = pickle.load(file_users)
-
-                    # Ensure we have a list
-                    if not isinstance(loaded_data, list):
-                        raise ValueError("Loaded data is not a list")
 
                     # Insert the object read into a list.
                     loaded_data_users.append(loaded_data)
@@ -96,6 +95,11 @@ def load_all_user():
                 # Keep loop until read all the file.
                 except EOFError:
                     break
+
+            # Ensure we have a list type.
+            if not isinstance(loaded_data_users, list):
+                raise ValueError("Loaded data is not a list")
+
     except PermissionError:
         print("You do not have permission to access this file.")
     except FileNotFoundError:
@@ -106,8 +110,9 @@ def load_all_user():
         print(f"An unexpected unpickling error occurred: {e}")
     except EOFError:
         print("Error loading data. Returning an empty list.")
-        return []
+        return []  # Return an empty list.
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
 
+    # If there's no error occurred, it returns the CLASS LIST of the User objects.
     return loaded_data_users
