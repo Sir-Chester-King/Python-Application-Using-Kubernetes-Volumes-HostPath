@@ -14,16 +14,16 @@ class User(object):
 
     # SET Functions ------------- #
     def set_name(self, name):
-        self.name = name
+        self.name = str(name)
 
     def set_surname(self, surname):
-        self.surname = surname
+        self.surname = str(surname)
 
     def set_address(self, address):
-        self.address = address
+        self.address = str(address)
 
     def set_phone_number(self, phone_number):
-        self.phone_number = phone_number
+        self.phone_number = str(phone_number)
 
     # GET Functions ------------- #
     def get_name(self):

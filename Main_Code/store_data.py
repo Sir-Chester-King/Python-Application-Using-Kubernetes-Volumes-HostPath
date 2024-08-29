@@ -18,7 +18,7 @@ def store_data(new_user_instance):
     # Check or create the "Storage" directory.
     directory_storage = storage_directory()
 
-    # Name of the file will contain the user's data.
+    # The Name of the file will contain the user's data.
     # Using PICKLE Serializing.
     file_name_storage = "Users_Data.pkl"
 

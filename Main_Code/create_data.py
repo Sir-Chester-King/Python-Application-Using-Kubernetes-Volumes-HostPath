@@ -1,5 +1,6 @@
 # Import modules section.
 import re
+
 from Classes.user_class import User
 from clean_console import *
 from store_data import store_data
@@ -70,7 +71,7 @@ def create_user():
             if check == "y":
                 check_value = check_input(name, surname, address, phone_number)
 
-                # Input ARE correct.
+                # Input IS correct.
                 if check_value:
                     correct_user_insert = True
                     break  # Break the loop.
