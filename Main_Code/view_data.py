@@ -34,6 +34,7 @@ def list_all_users():
                 try:
                     # Deserialize (unpickle) the object from the file
                     loaded_data = pickle.load(file_users)
+                    print("DIR: ", dir(loaded_data))
 
                     # Insert the object read into a list.
                     loaded_data_users.append(loaded_data)
