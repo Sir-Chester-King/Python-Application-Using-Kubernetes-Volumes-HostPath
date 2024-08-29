@@ -1,5 +1,6 @@
 # Import modules section.
-from create_data import *
+from clean_console import *
+from create_data import create_user
 from modify_data import *
 from view_data import *
 
@@ -26,9 +27,22 @@ def main():
     # Call the property function based on the user's chosen option.
     match option_chosen:
         case "1":
-            # Clear the console.
-            clear()
-            create_user()
+            # Loop if the user wants to create a multiple "User Objects"
+            loop_users = True
+
+            while loop_users:
+                # Clear the console.
+                clear()
+                create_user()
+
+                while True:
+                    print("Do you want to create another User?")
+                    choose = input("Yes or No (y / n): ").lower()
+                    if choose == "y":
+                        break
+                    if choose == "n":
+                        loop_users = False
+                        break
         case "2":
             # Clear the console.
             clear()
