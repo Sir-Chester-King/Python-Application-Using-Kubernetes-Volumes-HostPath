@@ -34,7 +34,6 @@ def list_all_users():
                 try:
                     # Deserialize (unpickle) the object from the file
                     loaded_data = pickle.load(file_users)
-                    print("DIR: ", dir(loaded_data))
 
                     # Insert the object read into a list.
                     loaded_data_users.append(loaded_data)
@@ -54,9 +53,8 @@ def list_all_users():
         print(f"An unexpected error occurred: {e}")
 
     print("-" * 40)
-    print("TYPE:", type(loaded_data_users))
-    # Print the LIST of all users (read from the binary file).
 
+    # Print the LIST of all users (read from the binary file).
     for users in loaded_data_users:
         print("Name:", users.get_name())
         print("Surname:", users.get_surname())
