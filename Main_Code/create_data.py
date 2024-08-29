@@ -1,9 +1,8 @@
-# Import modules section
-import pickle
+# Import modules section.
 import re
-
 from Classes.user_class import User
 from clean_console import *
+from store_data import store_data
 
 
 # Function to gather the user's input.
@@ -53,30 +52,6 @@ def check_input(name, surname, address, phone_number):
         return False  # Input are NOT correct.
 
 
-# Function to check if the "Storage" directory exist or not.
-# If not, it will be created.
-def storage_directory():
-    # This is the PATH inside the Project Directory (current directory)
-    absolute_path = os.path.abspath(__file__)
-
-    # Go up one level
-    one_level_up = os.path.dirname(absolute_path)
-
-    # Go up two levels
-    two_level_up = os.path.dirname(one_level_up)
-
-    # Path of the "Storage" directory.
-    directory_storage = os.path.join(two_level_up, "Storage")
-
-    # Check if the directory inside the project exist or not.
-    # In case it doesn't exist, it is created.
-    if not os.path.exists(directory_storage):
-        os.makedirs(directory_storage)
-        print(f"Created directory: {directory_storage}")
-
-    return directory_storage
-
-
 # Function to create a new User.
 def create_user():
     name, surname, address, phone_number = None, None, None, None
@@ -109,46 +84,5 @@ def create_user():
     # Creating a new instance "USER" to pass ad parameter to the proper function to be stored in a file.
     new_user_instance = User(name, surname, address, phone_number)
 
-    # Check or create the "Storage" directory.
-    directory_storage = storage_directory()
-
-    # Name of the file will contain the user's data.
-    # Using PICKLE Serializing.
-    file_name_storage = "Users_Data.pkl"
-
-    # Path of the txt file where the user's data will stored
-    file_path = os.path.join(directory_storage, file_name_storage)
-
-    # Writing the data in the file.
-    try:
-        # Store the object in a file using pickle.
-        # Open the file in binary write mode.
-        with open(file_path, "wb") as file:
-
-            # Serialize (pickle) the object and save it to the file.
-            pickle.dump(new_user_instance, file)
-    except FileNotFoundError:
-        # Store the object in a file using pickle.
-        # Open the file in binary write mode.
-        with open(file_path, "wb") as file:
-
-            # Serialize (pickle) the object and save it to the file.
-            pickle.dump(new_user_instance, file)
-    except PermissionError:
-        print("You do not have permission to access this file.")
-    except IOError:
-        print("An I/O error occurred while writing the file.")
-    except pickle.UnpicklingError as e:
-        print(f"An unexpected error occurred: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-
-    # Open the file in binary read mode.
-    with open(file_path, 'rb') as file:
-
-        # Deserialize (unpickle) the object from the file
-        loaded_data = pickle.load(file)
-    print("Read", loaded_data)
-
-
-create_user()
+    # Call the "store_data" function.
+    store_data(new_user_instance)

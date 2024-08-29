@@ -23,16 +23,19 @@ def main():
     while option_chosen not in options_available:
         option_chosen = str(input("Insert option: "))
 
-    # Clear the console.
-    clear()
-
     # Call the property function based on the user's chosen option.
     match option_chosen:
         case "1":
+            # Clear the console.
+            clear()
             create_user()
         case "2":
+            # Clear the console.
+            clear()
             list_all_users()
         case "3":
+            # Clear the console.
+            clear()
             modify_user()
         case _:
             return 0
