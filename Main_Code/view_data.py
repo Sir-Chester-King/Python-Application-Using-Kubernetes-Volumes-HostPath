@@ -53,7 +53,6 @@ def list_all_users():
         print(f"An unexpected error occurred: {e}")
 
     print("-" * 40)
-
     # Print the LIST of all users (read from the binary file).
     for users in loaded_data_users:
         print("Name:", users.get_name())
@@ -61,3 +60,5 @@ def list_all_users():
         print("Address:", users.get_address())
         print("Phone Number:", users.get_phone_number())
         print("-" * 40)
+
+    print("All objects have been loaded and their attributes printed.")
