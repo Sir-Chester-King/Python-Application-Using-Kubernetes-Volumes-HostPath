@@ -5,6 +5,40 @@ from storage_directory import *
 from view_data import load_all_user
 
 
+# Destroy and create a new file.
+# This because Pickle file creates an inconsistent data inside when you try to override it.
+def empty_file():
+    # Check or create the "Storage" directory.
+    directory_storage = storage_directory()
+
+    # The Name of the file will contain the user's data.
+    # Using PICKLE Serializing.
+    file_name_storage = "Users_Data.pkl"
+
+    # Path of the txt file where the user's data will stored
+    file_path = os.path.join(directory_storage, file_name_storage)
+
+    # Delete the file if it exists
+    if os.path.exists(file_path):
+        os.remove(file_path)
+
+    try:
+        # Recreate the file (empty)
+        with open(file_path, 'wb') as file:
+            pass  # This creates an empty file
+
+    except FileNotFoundError:
+        print("File not found")
+    except PermissionError:
+        print("You do not have permission to access this file.")
+    except IOError:
+        print("An I/O error occurred while writing the file.")
+    except pickle.UnpicklingError as e:
+        print(f"An unexpected error occurred: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+
+
 # Modify a user's attribute object.
 def modify_user():
     # If it wants to modify multiple users.
@@ -50,6 +84,9 @@ def modify_user():
     if not change:
         print("User not found.")
         return 0
+
+    # Wipe the file to be overridden.
+    empty_file()
 
     # Writing the data in the file.
     # Write one object of the list per time.
