@@ -19,10 +19,11 @@
 ---
 <a name="description"></a>
 ## Description
-This application allow to user to store into a file some User's data info, such as Name, Surname, Address and Phone Number; view the data stored and modify the User's data.<br>
-The storing of data are set in a file, and this file, will be stored into a <mark>Work Node's Volume</mark> using the specification <strong>HostPath {}</strong>.<br>
-The purpose of this app is to understand how to deploy, run and store data inside <em>Kubernetes Cluster</em>.<br>
-The application works via Terminal bash, not GUI.<br>
+
+This application enables users to manage their personal data, including Name, Surname, Address, and Phone Number.<br>
+It provides functionality for storing, viewing, and modifying user information. Data is stored in a file that is managed within a <mark>Kubernetes cluster</mark> using a <strong>hostPath</strong> volume specification.<br>
+The primary objective of this application is to demonstrate the process of deploying, running, and managing data within a Kubernetes cluster.<br>
+It operates through a command-line interface (CLI) rather than a graphical user interface (GUI).<br>
 Application is structured as:
 * Language: [Python](https://www.python.org)
 * Container Engine: [Docker](https://www.docker.com)
