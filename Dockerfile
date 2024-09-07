@@ -14,8 +14,8 @@ ENV PYTHONPATH "${PYTHONPATH}:/Docker_Directory"
 
 # Environment variables that will be used in the python application.
 # To help to gather info for property works container.
-ENV Path_Storage = "/Docker_Directory/Storage"
-ENV Name_File_Storage = "User_Data.pkl"
+ENV Path_Storage "/Docker_Directory/Storage"
+ENV Name_File_Storage "User_Data.pkl"
 
 
 # Create the Storage directory, where the data will be stored.
