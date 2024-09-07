@@ -17,7 +17,6 @@ ENV PYTHONPATH "${PYTHONPATH}:/Docker_Directory"
 ENV Path_Storage "/Docker_Directory/Storage"
 ENV Name_File_Storage "User_Data.pkl"
 
-
 # Create the Storage directory, where the data will be stored.
 RUN mkdir -p /Docker_Directory/Storage
 
