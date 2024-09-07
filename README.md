@@ -14,14 +14,16 @@
     - [Kubectl](#kube_kubectl)
     - [Minikube - Local Kubernetes Cluster Instance](#minikube)
 * [Run Python Application In The Pod](#run_python_app_pod)
+* [Author](#author)
 
 ---
 <a name="description"></a>
 ## Description
-This application allow to user to store into a file some User's data info, such as Name, Surname, Address and Phone Number; view the data stored and modify the User's data.<br>
-The storing of data are set in a file, and this file, will be stored into a <mark>Work Node's Volume</mark> using the specification <strong>HostPath {}</strong>.<br>
-The purpose of this app is to understand how to deploy, run and store data inside <em>Kubernetes Cluster</em>.<br>
-The application works via Terminal bash, not GUI.<br>
+
+This application enables users to manage their personal data, including Name, Surname, Address, and Phone Number.<br>
+It provides functionality for storing, viewing, and modifying user information. Data is stored in a file that is managed within a <mark>Kubernetes cluster</mark> using a <strong>hostPath</strong> volume specification.<br>
+The primary objective of this application is to demonstrate the process of deploying, running, and managing data within a Kubernetes cluster.<br>
+It operates through a command-line interface (CLI) rather than a graphical user interface (GUI).<br>
 Application is structured as:
 * Language: [Python](https://www.python.org)
 * Container Engine: [Docker](https://www.docker.com)
@@ -336,9 +338,8 @@ In this case, we use the public repository on [Docker Hub](https://hub.docker.co
 To pull the image, we need an accessible repository, so make sure to create a <b>public repository</b>.<br>
 <br>
 
-<b>Old Image</b>: python_app_image
-<b>New Image</b>: sirchesterking/kubernetes-volumes-hostpath (name of public repository)
-<br>
+<b>Old Image</b>: python_app_image<br>
+<b>New Image</b>: sirchesterking/kubernetes-volumes-hostpath (name of public repository)<br>
 
 Before to push the image in the public repository, you must login via terminal to docker hub adn provide username and password:
 ```
@@ -452,7 +453,7 @@ And
 ![Alt text](Readme_Screen/mount_view_2.png)
 
 ### View Data From WorkNode's FileSystem
-You can see the data that are store inside the Work Node's filesystem using via terminal the following command:
+You can see the data that are store inside the Work Node's filesystem using via terminal the following command:<br>
 <mark>THIS WORKS ONLY IN MINIKUBE CLUSTER</mark>
 ```
 minikube ssh
@@ -462,10 +463,10 @@ As you can see, you now in the worknode's filesystem, and you're able to see the
 ```
 ls -l /data # To list all the file inside the /data directory inside the work node's filesystem.
 ```
-
 ![Alt text](Readme_Screen/list_data_filesystem.png)
 
 
 ---
+<a name="author"></a>
 ## Author
 - <ins><b>Nicola Ricciardi</b></ins>
