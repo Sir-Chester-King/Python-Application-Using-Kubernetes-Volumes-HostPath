@@ -17,20 +17,13 @@ from storage_directory import *
 # Function to list as print all the User objects gathered from the Pickle binary file.
 def list_all_users():
     # Check or create the "Storage" directory.
-    directory_storage = storage_directory()
+    directory_storage_file = storage_directory()
 
-    # The Name of the file will contain the user's data.
-    # Using PICKLE Serializing.
-    file_name_storage = "Users_Data.pkl"
-
-    # Path of the txt file where the user's data will stored
-    file_path = os.path.join(directory_storage, file_name_storage)
-
-    loaded_data_users = []
+    loaded_data_users = []  # Initialise an empty list.
 
     try:
         # Open the file in binary read mode.
-        with open(file_path, 'rb') as file_users:
+        with open(directory_storage_file, 'rb') as file_users:
             while True:
                 try:
                     # Deserialize (unpickle) the object from the file
@@ -69,21 +62,13 @@ def list_all_users():
 # Function used to gather all the user objects and store them into a Class List type.
 def load_all_user():
     # Check or create the "Storage" directory.
-    directory_storage = storage_directory()
+    directory_storage_file = storage_directory()
 
-    # The Name of the file will contain the user's data.
-    # Using PICKLE Serializing.
-    file_name_storage = "Users_Data.pkl"
-
-    # Path of the txt file where the user's data will stored
-    file_path = os.path.join(directory_storage, file_name_storage)
-
-    # Initializing an empty list.
-    loaded_data_users = []
+    loaded_data_users = []  # Initialise an empty list.
 
     try:
         # Open the file in binary read mode.
-        with open(file_path, 'rb') as file_users:
+        with open(directory_storage_file, 'rb') as file_users:
             while True:
                 try:
                     # Deserialize (unpickle) the object from the file.

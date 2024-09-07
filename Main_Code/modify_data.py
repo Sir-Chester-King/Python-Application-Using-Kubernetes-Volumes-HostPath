@@ -9,23 +9,16 @@ from view_data import load_all_user
 # This because Pickle file creates an inconsistent data inside when you try to override it.
 def empty_file():
     # Check or create the "Storage" directory.
-    directory_storage = storage_directory()
-
-    # The Name of the file will contain the user's data.
-    # Using PICKLE Serializing.
-    file_name_storage = "Users_Data.pkl"
-
-    # Path of the txt file where the user's data will stored
-    file_path = os.path.join(directory_storage, file_name_storage)
+    directory_storage_file = storage_directory()
 
     # Delete the file if it exists
-    if os.path.exists(file_path):
-        os.remove(file_path)
+    if os.path.exists(directory_storage_file):
+        os.remove(directory_storage_file)
 
     try:
         # Recreate the file (empty)
-        with open(file_path, 'wb') as file:
-            pass  # This creates an empty file
+        with open(directory_storage_file, 'wb') as file:
+            pass  # This overrides the file into an empty file
 
     except FileNotFoundError:
         print("File not found")
@@ -45,14 +38,7 @@ def modify_user():
     loop_modify = True
 
     # Check or create the "Storage" directory.
-    directory_storage = storage_directory()
-
-    # The Name of the file will contain the user's data.
-    # Using PICKLE Serializing.
-    file_name_storage = "Users_Data.pkl"
-
-    # Path of the txt file where the user's data will stored
-    file_path = os.path.join(directory_storage, file_name_storage)
+    directory_storage_file = storage_directory()
 
     print("-" * 40)
     name_user = str(input("To modify the user, please insert the 'Name': "))
@@ -94,7 +80,7 @@ def modify_user():
         try:
             # Store the object in a file using pickle.
             # Open the file in binary write mode.
-            with open(file_path, "ab") as file_users:
+            with open(directory_storage_file, "ab") as file_users:
 
                 # Serialize (pickle) the object and save it to the file.
                 pickle.dump(override_data, file_users)

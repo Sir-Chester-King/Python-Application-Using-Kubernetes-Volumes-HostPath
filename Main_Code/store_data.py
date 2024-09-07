@@ -17,28 +17,22 @@ from storage_directory import *
 # Function to store the user object instance in the Pickle binary file.
 def store_data(new_user_instance):
     # Check or create the "Storage" directory.
-    directory_storage = storage_directory()
-
-    # The Name of the file will contain the user's data.
-    # Using PICKLE Serializing.
-    file_name_storage = "Users_Data.pkl"
-
-    # Path of the txt file where the user's data will stored
-    file_path = os.path.join(directory_storage, file_name_storage)
+    directory_storage_file = storage_directory()
 
     # Writing the data in the file.
     try:
         # Store the object in a file using pickle.
         # Open the file in binary APPEND mode.
-        with open(file_path, "ab") as file_users:
+        with open(directory_storage_file, "ab") as file_users:
 
             # Serialize (pickle) the object and save it to the file.
             pickle.dump(new_user_instance, file_users)
 
     except FileNotFoundError:  # Create a new pickle binary file.
+
         # Store the object in a file using pickle.
         # Open the file in binary WRITE mode.
-        with open(file_path, "wb") as file_users:
+        with open(directory_storage_file, "wb") as file_users:
 
             # Serialize (pickle) the object and save it to the file.
             pickle.dump(new_user_instance, file_users)
