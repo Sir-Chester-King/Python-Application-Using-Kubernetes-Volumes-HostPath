@@ -92,7 +92,7 @@ This file contain all commands used to build the Image that Containers inside th
 The Image is a snapshot of the source code, and when it did build, the Image is in read-only mode, and you cannot change the code.<br>
 If you want to create a container based to the new image, you must re-build the image.
 
---
+
 <a name="command_file"></a>
 ### Command Dockerfile
 The commands used to build the image that it'll be used to create the container that has the code, you must declare some
@@ -162,7 +162,7 @@ The <strong> CMD </strong> command it used to say to Docker to run the command w
 CMD ["python", "./Main_Code/main.py"]
 ```
 
---
+
 <a name="build_image"></a>
 ### Build Docker Image
 To build image, you must use the <strong> BUILD </strong> command, and pass where the dockerfile is stored, as a parameter.<br>
@@ -191,7 +191,7 @@ In production environments, the control plane usually runs across multiple compu
 
 For more details: [Cluster Architecture](https://kubernetes.io/docs/concepts/architecture/)
 
---
+
 <a name="kube_components"></a>
 ### Kubernetes Components
 A Kubernetes cluster consists of a control plane and one or more worker nodes.<br>
@@ -208,7 +208,7 @@ Here's a brief overview of the main components in the <mark>Node Plane</mark>:
 
 For more detail: [Kubernetes Components](https://kubernetes.io/docs/concepts/overview/components/)
 
----
+
 <a name="kube_api"></a>
 ## Kubernetes Server API
 The core of Kubernetes' control plane is the API server. The API server exposes an HTTP API that lets end users, different parts of your cluster, and external components communicate with one another.<br>
@@ -218,7 +218,7 @@ Kubernetes provides a set of client libraries for those looking to write applica
 
 For more detail: [Kubernetes API](https://kubernetes.io/docs/concepts/overview/kubernetes-api/)
 
---
+
 <a name="kube_objects"></a>
 ## Kubernetes Objects
 Kubernetes objects are persistent entities in the Kubernetes system.<br> 
@@ -230,7 +230,6 @@ Specifically, they can describe:
 
 For more detail: [Kubernetes Objects](https://kubernetes.io/docs/concepts/overview/working-with-objects/)
 
---
 <a name="kube_volumes_hostpath"></a>
 ## Kubernetes Volumes HostPath{}
 The Kubernetes offers the possibilities to store data into a Work Node's Volume. In this case it used the <mark>HostPath {} Volume.</mark>.<br>
@@ -256,7 +255,8 @@ The volume exists as long as the host node is running, independent of the pod li
 
 For more detail: [HostPath{} Volume](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath)
 
---
+
+---
 <a name="kube_kubectl"></a>
 ## Kubectl
 Kubernetes provides a command line tool for communicating with a Kubernetes cluster's control plane, using the Kubernetes API.<br>
@@ -266,7 +266,7 @@ For installation instructions, see [Installing kubectl](https://kubernetes.io/do
 For more detail: [Kubectl](https://kubernetes.io/docs/reference/kubectl/)
 
 
---
+---
 <a name="minikube"></a>
 ## Minikube - Local Kubernetes Cluster Instance
 Minikube is a tool that lets you run Kubernetes locally.<br>
@@ -318,11 +318,11 @@ You will able to see:
 This explain is all up and running.
 
 3) Build the Docker Image
-Tag the name of image a with the name the DockerHub Public Repository, that will be used by Kubernetes Deployment (in mu case sirchesterking/kubernetes-volumes-emprydir).<br>
+Tag the name of image a with the name the DockerHub Public Repository, that will be used by Kubernetes Deployment (in my case is: sirchesterking/kubernetes-volumes-hostpath).<br>
 To build the Docker image, you must use the following command:
 ```
 # We use the direectory " . ", 'cause when apply this command, we are int the same directory of Dockerfile.
-docker buil -t sirchesterking/kubernetes-volumes-emprydir .
+docker build -t sirchesterking/kubernetes-volumes-hostpath .
 ```
 
 To view the list of image:
@@ -337,7 +337,7 @@ To pull the image, we need an accessible repository, so make sure to create a <b
 <br>
 
 <b>Old Image</b>: python_app_image
-<b>New Image</b>: sirchesterking/kubernetes-volumes-emprydir (name of public repository)
+<b>New Image</b>: sirchesterking/kubernetes-volumes-hostpath (name of public repository)
 <br>
 
 Before to push the image in the public repository, you must login via terminal to docker hub adn provide username and password:
@@ -349,13 +349,13 @@ docker login
 After that, you can push the image in the public repository, using the following command:
 ```
 # We provided the name:tag
-docker push sirchesterking/kubernetes-volumes-emprydir
+docker push sirchesterking/kubernetes-volumes-hostpath
 ```
 
 5) Deploy the Kubernetes Deployment
 After the push of the image in the public repository, you can deploy the Kubernetes Deployment Object.<br>
 To do that, you must create, before, the Deployment.yaml file, that will contain all the attributes and the specification of the desired behavior of the Deployment.
-To review all the components inside the Deployment.yaml file, you can view [here](https://github.com/Sir-Chester-King/Python-Application-Using-Kubernetes-Volumes-EmptyDir/blob/main/Kubernetes_Deployment.yaml).<br>
+To review all the components inside the Deployment.yaml file, you can view [here](https://github.com/Sir-Chester-King/Python-Application-Using-Kubernetes-Volumes-HostPath/blob/main/deployment.yaml).<br>
 To deploy the <strong>Deployment Object</strong> in the Kubernetes Cluster, you must use:
 ```
 # After the -f option, you must provide the name of the Deployment.yaml file.
@@ -417,7 +417,7 @@ You will able to see via terminal:
 ![Alt text](Readme_Screen/bash_container_tree.png)
 
 As you can see, you now have access to a container inside the Pod.<br>
-Go under the Main_Code sirectory using:
+Go under the Main_Code directory using:
 ```
 cd Main_Code/
 ```
@@ -428,6 +428,10 @@ python Main_Code/main.py
 ```
 ![Alt text](Readme_Screen/run_app_container.png)
 ![Alt text](Readme_Screen/list_users_container.png)
+
+Data address modified from "LondoAAAA" to "London"
+![Alt text](Readme_Screen/modified_data.png)
+![Alt text](Readme_Screen/list_users2_container.png)
 
 If you have a multiple conatiner in the same Pod (because a Pod is a VM that can contain multiple containers), you must use:
 ```
@@ -447,7 +451,21 @@ As you can see, in the output of the code, it's able to see the mounted volume i
 And
 ![Alt text](Readme_Screen/mount_view_2.png)
 
+### View Data From WorkNode's FileSystem
+You can see the data that are store inside the Work Node's filesystem using via terminal the following command:
+<mark>THIS WORKS ONLY IN MINIKUBE CLUSTER</mark>
+```
+minikube ssh
+```
+
+As you can see, you now in the worknode's filesystem, and you're able to see the "User_Data.pkl" inside the filesystem.
+```
+ls -l /data # To list all the file inside the /data directory inside the work node's filesystem.
+```
+
+![Alt text](Readme_Screen/list_data_filesystem.png)
+
+
 ---
 ## Author
-
 - <ins><b>Nicola Ricciardi</b></ins>
