@@ -41,7 +41,7 @@ def modify_user():
     directory_storage_file = storage_directory()
 
     print("-" * 40)
-    name_user = str(input("To modify the user, please insert the 'Name': "))
+    name_user = str(input("To modify the user, please provide the 'Name' of the user: "))
 
     # Load all users objects from the file to this "CLASS LIST"
     loaded_users = load_all_user()
