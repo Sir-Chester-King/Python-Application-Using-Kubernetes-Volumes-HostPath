@@ -14,6 +14,7 @@
     - [Kubectl](#kube_kubectl)
     - [Minikube - Local Kubernetes Cluster Instance](#minikube)
 * [Run Python Application In The Pod](#run_python_app_pod)
+* [Author](#author)
 
 ---
 <a name="description"></a>
@@ -465,5 +466,6 @@ ls -l /data # To list all the file inside the /data directory inside the work no
 
 
 ---
+<a name="author"></a>
 ## Author
 - <ins><b>Nicola Ricciardi</b></ins>
