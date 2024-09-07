@@ -336,9 +336,8 @@ In this case, we use the public repository on [Docker Hub](https://hub.docker.co
 To pull the image, we need an accessible repository, so make sure to create a <b>public repository</b>.<br>
 <br>
 
-<b>Old Image</b>: python_app_image
-<b>New Image</b>: sirchesterking/kubernetes-volumes-hostpath (name of public repository)
-<br>
+<b>Old Image</b>: python_app_image<br>
+<b>New Image</b>: sirchesterking/kubernetes-volumes-hostpath (name of public repository)<br>
 
 Before to push the image in the public repository, you must login via terminal to docker hub adn provide username and password:
 ```
