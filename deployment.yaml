@@ -12,7 +12,7 @@ kind: Deployment
 metadata:
 
   # Name of the deployment.
-  name: Deployment-Kube-HostPath
+  name: deployment-kube-hostpath
 
 # Specification the desired behaviour of the Deployment.
 spec:
