@@ -451,7 +451,7 @@ And
 ![Alt text](Readme_Screen/mount_view_2.png)
 
 ### View Data From WorkNode's FileSystem
-You can see the data that are store inside the Work Node's filesystem using via terminal the following command:
+You can see the data that are store inside the Work Node's filesystem using via terminal the following command:<br>
 <mark>THIS WORKS ONLY IN MINIKUBE CLUSTER</mark>
 ```
 minikube ssh
@@ -461,7 +461,6 @@ As you can see, you now in the worknode's filesystem, and you're able to see the
 ```
 ls -l /data # To list all the file inside the /data directory inside the work node's filesystem.
 ```
-
 ![Alt text](Readme_Screen/list_data_filesystem.png)
 
 
