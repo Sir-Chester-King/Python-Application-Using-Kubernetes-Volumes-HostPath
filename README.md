@@ -3,8 +3,6 @@
 ## Table Of Contents
 * [Description](#description)
 * [Main Application](#main_app)
-    - [Store_Data](#store_data)
-    - [View_Data](#view_data)
 * [Dockerfile](#dockerfile)
     - [Command Dockerfile](#command_file)
     - [Build Docker Image](#build_image)
@@ -20,9 +18,9 @@
 ---
 <a name="description"></a>
 ## Description
-This application allow to user to store into a file saome User's data info, such as Name, Surname, Address and Phone Number; and view the data stored too.<br>
+This application allow to user to store into a file some User's data info, such as Name, Surname, Address and Phone Number; view the data stored and modify the User's data.<br>
 The storing of data are set in a file, and this file, will be stored into a <mark>Work Node's Volume</mark> using the specification <strong>HostPath {}</strong>.<br>
-The purpose of this app is to understand how to deploy, run and store data inside <em>Pod's Volume</em><br>
+The purpose of this app is to understand how to deploy, run and store data inside <em>Kubernetes Cluster</em>.<br>
 The application works via Terminal bash, not GUI.<br>
 Application is structured as:
 * Language: [Python](https://www.python.org)
@@ -31,11 +29,8 @@ Application is structured as:
 
 The Tree of application is:
 - **`Project_Pythony/`**: The root directory of the project.
-- **`Main_Code/`**: Contains the main application logic.
+- **`Main_Code/`**: Contains the main application logic and all the modules.
 - **`Classes/`**: Includes additional modules used by the main application.
-- **`View_Users/`**: Manages user view list functionality.
-- **`Store_Data/`**: Handles data storage operations.
-- **`Create_Users/`**: Manages user creation functionality.
 - **`Dockerfile`**: Defines the Docker container setup for the project.
 - **`Kubernetes_Deployment.yaml`**: Define the Kubernetes Cluster setup for the pods.
 - **`README.md`**: Documentation for the project.
@@ -43,13 +38,14 @@ The Tree of application is:
 ---
 <a name="main_app"></a>
 ## Main Application
-The application in the main page, show to user a menu list to create a new user, or view the list of all users.<br>
+The application in the main page, show to user a menu list which he can choose.<br>
 The input is via Terminal command.
 
 ```
 menu_app = {
     "1": "Create new user",
-    "2": "View list users"
+    "2": "View list all users",
+    "3": "Modify existing user"
 }
 ```
 
@@ -60,43 +56,41 @@ It be used a match statesman to call the proper function based on user's choice:
 ```
 # Call the property function based on the user's chosen option.
 match option_chosen:
-  case "1":
-    Create_Users.Create_users.new_user()
-  case "2":
-    View_Users.View_users.list_users_volume()
-  case _:
-    return 0
-```
+    case "1":
+        # Loop if the user wants to create a multiple "User Objects"
+        loop_users = True
 
-<a name="store_data"></a>
-### Store_Data
-This function is structured for storing the data of new users into the file into a <ins>Pod's Volume</ins>. <br>
-It defined where the data will be stored (the path is harded code inside the code).
+        while loop_users:
+            # Clear the console.
+            clear()
+            create_user()
 
-```
-# This is the PATH inside the Docker Container Volume
-path_volume_docker = "/Docker_Directory/Storage/User_Data.txt"
-
-# Going one level up -> /Docker_Directory/Storage/
-directory_storage = os.path.dirname(path_volume_docker)
-
-# Check if the directory inside the volume exist or not.
-if not os.path.exists(directory_storage):
-    print(f"The directory {directory_storage} was not found")
-
-# Try statesman to read all the file "USER_DATA" into the Docker volume
-try:
-    with open(path_volume_docker, 'r') as storage_file:
-        content = storage_file.read()
-        print("List Users:", end="\n")
-        print(content)
+            while True:
+                print("Do you want to create another User?")
+                choose = input("Yes or No (y / n): ").lower()
+                if choose == "y":
+                    break
+                if choose == "n":
+                    loop_users = False
+                    break
+    case "2":
+        # Clear the console.
+        clear()
+        list_all_users()
+    case "3":
+        # Clear the console.
+        clear()
+        modify_user()
+    case _:
+        return 0
 ```
 
 ---
 <a name="dockerfile"></a>
 ## Dockerfile
-This file contain all commands used to build the Image that Containers will use.<br>
-The Image is a snapshot of the source code, and when it did build, the Image is in read-only mode, and you cannot change the code. If you want to create a container based to the new image, you must re-build the image.
+This file contain all commands used to build the Image that Containers inside the Pods will use.<br>
+The Image is a snapshot of the source code, and when it did build, the Image is in read-only mode, and you cannot change the code.<br>
+If you want to create a container based to the new image, you must re-build the image.
 
 --
 <a name="command_file"></a>
@@ -144,6 +138,11 @@ The <strong> ENV </strong> command it used to set the wanted variable to be incl
 ```
 # Set the PYTHONPATH to include the "Docker_Directory" directory
 ENV PYTHONPATH "${PYTHONPATH}:/Docker_Directory"
+
+# Environment variables that will be used in the python application.
+# To help to gather info for property works container.
+ENV Path_Storage "/Docker_Directory/Storage"
+ENV Name_File_Storage "User_Data.pkl"
 ```
 
 <br>
@@ -232,14 +231,30 @@ Specifically, they can describe:
 For more detail: [Kubernetes Objects](https://kubernetes.io/docs/concepts/overview/working-with-objects/)
 
 --
-<a name="kube_volumes_emptydir"></a>
-## Kubernetes Volumes EmptyDir {}
-The Kubernetes offers the possibilities to store data in a Volume.<br>
-In this case it used the <mark>EmptyDir {} Volume.</mark>.<br>
-For a Pod that defines an EmptyDir volume, the volume is created when the Pod is assigned to a node. As the name says, the EmptyDir volume is initially empty. All containers in the Pod can read and write the same files in the emptyDir volume, though that volume can be mounted at the same or different paths in each container.
-When a Pod is removed from a node for any reason, the data in the EmptyDir is <strong>deleted permanently<strong>.
+<a name="kube_volumes_hostpath"></a>
+## Kubernetes Volumes HostPath{}
+The Kubernetes offers the possibilities to store data into a Work Node's Volume. In this case it used the <mark>HostPath {} Volume.</mark>.<br>
+The volume mounts a directory or file <mark>from the host's filesystem into the pod</mark>.<br>
+This is not something that most Pods will need, but it offers a powerful escape hatch for some applications.<br>
 
-For more detail: [EmprtyDir {} Volume](https://kubernetes.io/docs/concepts/storage/volumes/#emptydir)
+### Purpose
+It allows to mount a directory or file from the host node's filesystem into the pod. This gives pods direct access to the host's storage, which can be persistent across pod restarts but is tied to the specific node.
+
+### Data Persistance
+<em>Persistent</em> (but limited): Data in a hostPath volume can persist across pod restarts because it's stored on the node's filesystem.<br>
+However, if the pod is rescheduled to a different node, the data <mark>does not move</mark> with it, so it is "persistent" only while the pod stays on the same node.
+
+### Use Cases
+- Accessing files from the host's filesystem (for example, sharing configuration files, binaries, or logs).
+- Use when the pod requires direct access to specific host paths, such as directories used by applications on the node, or when you need data to persist across pod restarts (on the same node).
+
+### Security Considerations
+Less secure because it grants the pod direct access to the host's filesystem. If misconfigured or given too much privilege, it could expose the host system to vulnerabilities from within the container. Limiting access to sensitive directories is essential.
+
+### Lifecycle
+The volume exists as long as the host node is running, independent of the pod lifecycle. If the pod is deleted, the data will remain on the host filesystem.
+
+For more detail: [HostPath{} Volume](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath)
 
 --
 <a name="kube_kubectl"></a>
@@ -262,7 +277,7 @@ After installation of Minikube, to start a local Kubernetes Cluster, follow the 
 
 ---
 <a name="run_python_app_pod"></a>
-### Run Python Application In A Pod
+### Run Python Application
 To run the python app, we need execute some steps before to do it.
 - Run Minikube - Local Kubernetes Cluster Instance
 - Verify the status of local Cluster
